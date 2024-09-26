@@ -7,7 +7,18 @@ load_dotenv()
 
 
 def send_alert(data):
-    msg = data["msg"].encode("latin-1", "backslashreplace").decode("unicode_escape")
+    msg = data["msg"]
+    if "Buy" in msg:
+        msg = msg.replace("Buy signal for", "🟢 Buy signal for")
+    elif "Sell" in msg:
+        msg = msg.replace("Sell signal for", "🔴 Sell signal for")
+
+    # Достаём название тикера из сообщения
+    ticker = msg.split("for ")[1]
+
+    # Заменяем название тикера на гиперссылку
+    msg = msg.replace(f"for {ticker}", f"for [{ticker}](https://www.tradingview.com/chart/{ticker}/)")
+
     tg_bot = Bot(token=os.getenv('BOT_TOKEN'))
     try:
         tg_bot.sendMessage(
