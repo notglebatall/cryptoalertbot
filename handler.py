@@ -17,7 +17,7 @@ def send_alert(data):
     ticker = msg.split("for ")[1]
 
     # Заменяем название тикера на гиперссылку
-    msg = msg.replace(f"for {ticker}", f"for [{ticker}](https://www.tradingview.com/chart/{ticker}/)")
+    msg = msg.replace(f"for {ticker}", f"for [{ticker}](https://www.tradingview.com/chart/{ticker}/?utm_source=telegram)")
 
     tg_bot = Bot(token=os.getenv('BOT_TOKEN'))
     try:
